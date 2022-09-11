@@ -11,7 +11,16 @@ const api = axios.create({
 
 // Utils
 
-function createMovies(movies, container) {
+const lazyObserver = new IntersectionObserver((entries) => {
+  entries.forEach( entry => {
+    if( entry.isIntersecting ) {
+      const url = entry.target.getAttribute('data-img');
+      entry.target.setAttribute('src', url)
+    }
+  })
+})
+
+function createMovies(movies, container, isObserve = false) {
   container.innerHTML = '';
 
   movies.forEach(movie => {
@@ -24,10 +33,21 @@ function createMovies(movies, container) {
     const movieImg = document.createElement('img');
     movieImg.classList.add('movie-img');
     movieImg.setAttribute('alt', movie.title);
+    
+    movieImg.addEventListener('error', () => {
+      movieImg.setAttribute('src', 'https://www.quicideportes.com/assets/images/custom/no-image.png');
+    })
+
     movieImg.setAttribute(
-      'src',
-      'https://image.tmdb.org/t/p/w300' + movie.poster_path,
+      (isObserve ? 'data-img' : 'src'),
+      (`https://image.tmdb.org/t/p/w300/${movie.poster_path}`)
     );
+
+
+    if( isObserve ) {
+      lazyObserver.observe(movieImg);
+    }
+
 
     movieContainer.appendChild(movieImg);
     container.appendChild(movieContainer);
@@ -62,7 +82,7 @@ async function getTrendingMoviesPreview() {
   const movies = data.results;
   console.log(movies)
 
-  createMovies(movies, trendingMoviesPreviewList);
+  createMovies(movies, trendingMoviesPreviewList, true);
 }
 
 async function getCategegoriesPreview() {
@@ -80,7 +100,7 @@ async function getMoviesByCategory(id) {
   });
   const movies = data.results;
 
-  createMovies(movies, genericSection);
+  createMovies(movies, genericSection, true);
 }
 
 async function getMoviesBySearch(query) {
@@ -91,14 +111,14 @@ async function getMoviesBySearch(query) {
   });
   const movies = data.results;
 
-  createMovies(movies, genericSection);
+  createMovies(movies, genericSection, true);
 }
 
 async function getTrendingMovies() {
   const { data } = await api('trending/movie/day');
   const movies = data.results;
 
-  createMovies(movies, genericSection);
+  createMovies(movies, genericSection, true);
 }
 
 async function getMovieById(id) {

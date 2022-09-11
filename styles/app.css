@@ -88,6 +88,20 @@ button {
 }
 
 
+/* Skeleton */
+
+.movie-container {
+  background-color: var(--purple-medium-1);
+  height: 225px;
+  min-height: 225px;
+  max-height: 225px;
+  width: 150px;
+  min-width: 150px;
+  max-width: 150px;
+  border-radius: 8px;
+}
+
+
 /* Shared */
 .header-container, .trendingPreview-header, .categoriesPreview-container {
   padding: 0 24px;
@@ -107,6 +121,7 @@ button {
 
 .movie-img {
   border-radius: 8px;
+  height: 100%
 }
 
 .categoriesPreview-list, .categories-list {
@@ -267,6 +282,7 @@ button {
 .genericList-container .movie-container {
   display: inline-block;
   width: 47.5%;
+  margin-bottom: 10px;
 }
 
 .genericList-container .movie-img {
