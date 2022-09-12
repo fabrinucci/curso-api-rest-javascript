@@ -66,9 +66,11 @@ function homePage() {
   categoriesPreviewSection.classList.remove('inactive');
   genericSection.classList.add('inactive');
   movieDetailSection.classList.add('inactive');
+  likedSection.classList.remove('inactive');
   
   getTrendingMoviesPreview();
   getCategegoriesPreview();
+  getLikedMovies();
 }
 
 function categoriesPage() {
@@ -86,6 +88,7 @@ function categoriesPage() {
   categoriesPreviewSection.classList.add('inactive');
   genericSection.classList.remove('inactive');
   movieDetailSection.classList.add('inactive');
+  likedSection.classList.add('inactive');
 
   // ['#category', 'id-name']
   const [_, categoryData] = location.hash.split('=');
@@ -114,6 +117,7 @@ function movieDetailsPage() {
   categoriesPreviewSection.classList.add('inactive');
   genericSection.classList.add('inactive');
   movieDetailSection.classList.remove('inactive');
+  likedSection.classList.add('inactive');
 
   // ['#movie', '234567']
   const [_, movieId] = location.hash.split('=');
@@ -135,6 +139,7 @@ function searchPage() {
   categoriesPreviewSection.classList.add('inactive');
   genericSection.classList.remove('inactive');
   movieDetailSection.classList.add('inactive');
+  likedSection.classList.add('inactive');
 
   // ['#search', 'platzi']
   const [_, query] = location.hash.split('=');
@@ -159,6 +164,7 @@ function trendsPage() {
   categoriesPreviewSection.classList.add('inactive');
   genericSection.classList.remove('inactive');
   movieDetailSection.classList.add('inactive');
+  likedSection.classList.add('inactive');
 
   headerCategoryTitle.innerHTML = 'Tendencias';
 
